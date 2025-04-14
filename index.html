@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pokémonkarten Punkte-Rechner</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <div class="language-switch">
+    <button onclick="switchLanguage('de')">Deutsch</button>
+    <button onclick="switchLanguage('en')">English</button>
+  </div>
+
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th id="param-header">Parameter</th>
+          <th id="count-header">Anzahl</th>
+          <th id="value-header">EUR/Einheit</th>
+        </tr>
+      </thead>
+      <tbody id="card-table">
+        <!-- Dynamisch erzeugt durch JavaScript -->
+      </tbody>
+    </table>
+
+    <div class="result">
+      <span id="total-label">Gesamtwert (EUR):</span>
+      <span id="total">0.00000</span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
