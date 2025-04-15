@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -5,180 +6,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pokémonkarten Punkte-Rechner</title>
   <link rel="stylesheet" href="style.css"/>
-  <style>
-    body {
-      background-color: #1e1e1e;
-      color: #f1f1f1;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85em;
-      table-layout: fixed;
-    }
-    th, td {
-      border: 1px solid #444;
-      padding: 4px;
-      text-align: center;
-    }
-    th:first-child, td:first-child {
-      width: 150px;
-      text-align: center;
-    }
-    th:nth-child(3), th:nth-child(5), th:nth-child(7),
-    td:nth-child(3), td:nth-child(5), td:nth-child(7) {
-      border-right: 3px solid #888;
-    }
-    th:nth-child(n+2), td:nth-child(n+2) {
-      width: 60px;
-    }
-    input[type="number"] {
-      width: 60px;
-      padding: 3px;
-      box-sizing: border-box;
-      background-color: #2a2a2a;
-      border: 1px solid #555;
-      color: #fff;
-      font-size: 0.85em;
-    }
-    .result {
-      font-size: 1em;
-      text-align: right;
-      margin-top: 10px;
-    }
-    .clear-button-container {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .clear-button {
-      padding: 8px 16px;
-      background-color: #444;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9em;
-    }
-    .clear-button:hover {
-      background-color: #666;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
     <table>
       <thead>
         <tr>
-          <th>Parameter</th>
+          <th style="min-width:120px;">Parameter</th>
           <th>DE</th>
-          <th>EUR</th>
-          <th>EN</th>
-          <th>EUR</th>
-          <th>JP</th>
-          <th>EUR</th>
+          <th>€</th>
+          <th class="separator">EN</th>
+          <th>€</th>
+          <th class="separator">JP</th>
+          <th>€</th>
         </tr>
       </thead>
       <tbody id="card-table">
-        <!-- Dynamisch durch JavaScript: Rare wird ausgelassen, Strahlende und Trainergalerie einzeln dargestellt -->
+        <tr>
+          <td style="text-align:center;">Common/Uncommon</td>
+          <td><input type="number" min="0" step="1" class="input-de" /></td>
+          <td><input type="number" min="0" step="0.0001" class="input-de-eur" /></td>
+          <td class="separator"><input type="number" min="0" step="1" class="input-en" /></td>
+          <td><input type="number" min="0" step="0.0001" class="input-en-eur" /></td>
+          <td class="separator"><input type="number" min="0" step="1" class="input-jp" /></td>
+          <td><input type="number" min="0" step="0.0001" class="input-jp-eur" /></td>
+        </tr>
       </tbody>
     </table>
-
     <div class="result">
-      <span>Value (EUR):</span>
+      <span>Value:</span>
       <span id="total">0.0000</span>
     </div>
-
     <div class="clear-button-container">
       <button class="clear-button" onclick="clearInputs()">Delete</button>
     </div>
   </div>
-
   <script src="script.js"></script>
-  <script>
-    const parameters = [
-      "Common/Uncommon",
-      "Reverse",
-      "Holo",
-      "V",
-      "VMax/VStar",
-      "GX/EX",
-      "Trainer",
-      "Energie",
-      "XXL",
-      "Strahlende",
-      "Trainergalerie",
-      "ETB Boxen",
-      "Pins",
-      "Münzen",
-      "Mini Tins"
-    ];
-
-    function createTable() {
-      const tableBody = document.getElementById('card-table');
-      tableBody.innerHTML = '';
-
-      parameters.forEach(param => {
-        const row = document.createElement('tr');
-
-        const paramCell = document.createElement('td');
-        paramCell.textContent = param;
-        paramCell.style.textAlign = 'center';
-        row.appendChild(paramCell);
-
-        for (let i = 0; i < 3; i++) {
-          const countInput = document.createElement('input');
-          countInput.type = 'number';
-          countInput.min = '0';
-          countInput.step = '1';
-          countInput.classList.add('count');
-          countInput.addEventListener('input', calculateTotal);
-
-          const countCell = document.createElement('td');
-          countCell.appendChild(countInput);
-          row.appendChild(countCell);
-
-          const valueInput = document.createElement('input');
-          valueInput.type = 'number';
-          valueInput.min = '0';
-          valueInput.step = '0.0001';
-          valueInput.classList.add('value');
-          valueInput.addEventListener('input', calculateTotal);
-
-          const valueCell = document.createElement('td');
-          valueCell.appendChild(valueInput);
-          row.appendChild(valueCell);
-        }
-
-        tableBody.appendChild(row);
-      });
-    }
-
-    function calculateTotal() {
-      let total = 0;
-      document.querySelectorAll('#card-table tr').forEach(row => {
-        const counts = row.querySelectorAll('.count');
-        const values = row.querySelectorAll('.value');
-        for (let i = 0; i < counts.length; i++) {
-          const count = parseFloat(counts[i].value) || 0;
-          const value = parseFloat(values[i].value) || 0;
-          total += count * value;
-        }
-      });
-      document.getElementById('total').textContent = total.toFixed(4);
-    }
-
-    function clearInputs() {
-      document.querySelectorAll('input').forEach(input => input.value = '');
-      calculateTotal();
-    }
-
-    createTable();
-  </script>
 </body>
 </html>
